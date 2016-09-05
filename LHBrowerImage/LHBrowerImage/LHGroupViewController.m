@@ -8,9 +8,9 @@
 
 #import "LHGroupViewController.h"
 #import "LHPhotoList.h"
-
+#import "LHGroupTableViewCell.h"
 #import "LHCollectionViewController.h"
-@interface LHGroupViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface LHGroupViewController ()<UITableViewDelegate,UITableViewDataSource,PHPhotoLibraryChangeObserver>
 @property (nonatomic,strong) NSMutableArray<LHPhotoAblumList *> *listArray;//所有的相册列表
 @property (nonatomic,strong) NSMutableArray<PHAsset *> *contentArray;//里面所有的相册
 @property (nonatomic,strong) UITableView *tableView;
@@ -21,13 +21,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.title = @"照片";
     _listArray = [NSMutableArray new];
     _contentArray = [NSMutableArray new];
-    [_listArray addObjectsFromArray:[[LHPhotoList sharePhotoTool]getPhotoAblumList]];
+    //先判断是否能获取相册
+    
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
+        NSLog(@"暂无访问权限");
+    }else{
+        [_listArray removeAllObjects];
+        [_listArray addObjectsFromArray:[[LHPhotoList sharePhotoTool]getPhotoAblumList]];
+        [self.tableView reloadData];
+    }
+    [[PHPhotoLibrary sharedPhotoLibrary]registerChangeObserver:self];
     [self tableView];//创建tableview
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(backHome)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
 }
-
+#pragma mark -协议 
+-(void)photoLibraryDidChange:(PHChange *)changeInstance{
+    __weak LHGroupViewController *weakSelf = self;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        __strong LHGroupViewController *strongSelf = weakSelf;
+        [_listArray removeAllObjects];
+        [_listArray addObjectsFromArray:[[LHPhotoList sharePhotoTool]getPhotoAblumList]];
+        [strongSelf.tableView reloadData];
+    });
+    
+}
 #pragma mark -返回
 -(void)backHome{
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -47,16 +68,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *cellid = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    LHGroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+        cell = [[LHGroupTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
+    
     LHPhotoAblumList *album = _listArray[indexPath.row];
-    [[LHPhotoList sharePhotoTool] requestImageForAsset:album.headImageAsset size:CGSizeMake(65*3, 65*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-        cell.imageView.image = image;
-    }];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = album.title;
+    [cell configUi:album];
     return cell;
 }
 
@@ -65,7 +84,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 60;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -73,13 +92,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%@",_listArray[indexPath.row].title);
     LHCollectionViewController *collect = [[LHCollectionViewController alloc]init];
-    collect.imageBlockArray = ^(id x){
-        if (x) {
-            self.backImageArray(x);
+    __weak LHGroupViewController *weakSelf = self;
+    collect.imageBlockArray = ^(NSMutableArray<PHAsset *>*array){
+        __strong LHGroupViewController *strongSelf = weakSelf;
+        if (array) {
+            strongSelf.backImageArray(array);
         }
     };
+    collect.maxChooseNumber = self.maxChooseNumber;
     collect.album = _listArray[indexPath.row];
     [self.navigationController pushViewController:collect animated:YES];
 }

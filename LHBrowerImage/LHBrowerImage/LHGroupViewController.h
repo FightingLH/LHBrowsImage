@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void(^backArrayBlock)(id x);
+typedef void(^backArrayBlock)(NSMutableArray *array);
 @interface LHGroupViewController : UIViewController
 @property (nonatomic,copy)backArrayBlock backImageArray;
+@property (nonatomic,assign) NSInteger maxChooseNumber;
 @end

@@ -100,16 +100,17 @@ static LHPhotoList *sharePhotoTool = nil;
 - (NSArray<LHPhotoAblumList *> *)getPhotoAblumList
 {
     NSMutableArray<LHPhotoAblumList *> *photoAblumList = [NSMutableArray array];
-    
+    __weak typeof(self) weakSelf = self;
     //获取所有智能相册
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
     [smartAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
         //过滤掉视频和最近删除
         if(collection.assetCollectionSubtype != 202 && collection.assetCollectionSubtype < 212){
-            NSArray<PHAsset *> *assets = [self getAssetsInAssetCollection:collection ascending:NO];
+             __strong typeof(weakSelf) strongSelf = weakSelf;
+            NSArray<PHAsset *> *assets = [strongSelf getAssetsInAssetCollection:collection ascending:NO];
             if (assets.count > 0) {
                 LHPhotoAblumList *ablum = [[LHPhotoAblumList alloc] init];
-                ablum.title = collection.localizedTitle;
+                ablum.title = [strongSelf transFormPhotoTitle:collection.localizedTitle];
                 ablum.count = assets.count;
                 ablum.headImageAsset = assets.firstObject;
                 ablum.assetCollection = collection;
@@ -121,10 +122,11 @@ static LHPhotoList *sharePhotoTool = nil;
     //获取用户创建的相册
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray<PHAsset *> *assets = [self getAssetsInAssetCollection:collection ascending:NO];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSArray<PHAsset *> *assets = [strongSelf getAssetsInAssetCollection:collection ascending:NO];
         if (assets.count > 0) {
             LHPhotoAblumList *ablum = [[LHPhotoAblumList alloc] init];
-            ablum.title = collection.localizedTitle;
+            ablum.title = [strongSelf transFormPhotoTitle:collection.localizedTitle];
             ablum.count = assets.count;
             ablum.headImageAsset = assets.firstObject;
             ablum.assetCollection = collection;
@@ -195,7 +197,7 @@ static LHPhotoList *sharePhotoTool = nil;
      */
     
     option.resizeMode = resizeMode;//控制照片尺寸
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;//控制照片质量
+    //    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;//控制照片质量
     option.networkAccessAllowed = YES;
     
     /*
@@ -279,5 +281,25 @@ static LHPhotoList *sharePhotoTool = nil;
 //        }];
 //    }
 //}
-
+-(NSString *)transFormPhotoTitle:(NSString *)englishName{
+    NSString *photoName;
+    if ([englishName isEqualToString:@"Bursts"]) {
+        photoName = @"连拍快照";
+    }else if([englishName isEqualToString:@"Recently Added"]){
+        photoName = @"最近添加";
+    }else if([englishName isEqualToString:@"Screenshots"]){
+        photoName = @"屏幕快照";
+    }else if([englishName isEqualToString:@"Camera Roll"]){
+        photoName = @"相机胶卷";
+    }else if([englishName isEqualToString:@"Selfies"]){
+        photoName = @"自拍";
+    }else if([englishName isEqualToString:@"QQ"]){
+        photoName = @"QQ";
+    }else if([englishName isEqualToString:@"My Photo Stream"]){
+        photoName = @"我的照片流";
+    }else{
+        photoName = @"englishName";
+    }
+    return photoName;
+}
 @end
