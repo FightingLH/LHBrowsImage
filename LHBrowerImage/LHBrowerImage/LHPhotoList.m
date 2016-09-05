@@ -7,7 +7,7 @@
 //
 
 #import "LHPhotoList.h"
-///////ZLBigImageCell 不建议设置太大，太大的话会导致图片加载过慢
+/////// 不建议设置太大，太大的话会导致图片加载过慢
 #define kMaxImageWidth 500
 
 #define kViewWidth      [[UIScreen mainScreen] bounds].size.width
@@ -268,7 +268,7 @@ static LHPhotoList *sharePhotoTool = nil;
 //    
 //    __weak typeof(self) weakSelf = self;
 //    for (int i = 0; i < photos.count; i++) {
-//        ZLSelectPhotoModel *model = photos[i];
+//        LHSelectPhotoModel *model = photos[i];
 //        [[PHCachingImageManager defaultManager] requestImageDataForAsset:model.asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
 //            __strong typeof(weakSelf) strongSelf = weakSelf;
 //            dataLength += imageData.length;
