@@ -53,13 +53,11 @@
                     [[LHPhotoList sharePhotoTool]requestImageForAsset:asset scale:1 resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image) {
                         UIImage *compressImage = [strongSelf imageUserToCompressForSizeImage:CGSizeMake(1920, 1180) withImage:image];
                         [_imageArray addObject:compressImage];
-                        NSLog(@"%ld",strongSelf.imageArray.count);
                     }];
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        [strongSelf setSpread];
-                    });
                 }
-                
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [strongSelf setSpread];
+                });
                 });
         }
     };
@@ -73,10 +71,9 @@
     scrol.frame = CGRectMake(0, 100, 320, 100);
     scrol.backgroundColor = [UIColor redColor];
     [self.view addSubview:scrol];
-    
     for (int i = 0; i<self.imageArray.count; i++) {
         UIImageView *imageView = [[UIImageView alloc]init];
-        imageView.frame = CGRectMake(0+50*i+10*i, 0, 50, 60);
+        imageView.frame = CGRectMake(0+72*i+10*i, 0, 72, 72);
         imageView.image = self.imageArray[i];
         [scrol addSubview:imageView];
     }
