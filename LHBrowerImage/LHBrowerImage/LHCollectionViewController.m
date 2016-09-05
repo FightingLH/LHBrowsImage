@@ -32,11 +32,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     }
     return self;
 }
-//图片是否被选中
--(void)setIsChoose:(BOOL)isChoose{
-    _isChoose = isChoose;
-    _selectBtn.selected = isChoose;
-}
+
 @end
 
 @interface LHCollectionViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
@@ -88,18 +84,18 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     if (!cell) {
         cell = [VZTPhotoListCell new];
     }
-    __weak LHCollectionViewController *weakSelf = self;
+ 
     [[LHPhotoList sharePhotoTool] requestImageForAsset:self.assetArray[indexPath.row] size:CGSizeMake((self.view.frame.size.width - imageSpacing*(maxCountInLine - 1))/maxCountInLine*3, (self.view.frame.size.width - imageSpacing*(maxCountInLine - 1))/maxCountInLine*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-        __strong LHCollectionViewController *strongSelf = weakSelf;
-        cell.imageView.image = [strongSelf cutSquareImage:image];
+
+        cell.imageView.image = [self cutSquareImage:image];
     }];
     return cell;
-    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
+    PHAsset *asset = _assetArray[indexPath.row];
+    self.imageBlockArray(asset);
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,9 +123,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     
     return newimg;
 }
--(void)dealloc{
-    NSLog(@"%s",__FUNCTION__);
-}
+
 /*
  #pragma mark - Navigation
  

@@ -195,7 +195,7 @@ static LHPhotoList *sharePhotoTool = nil;
      */
     
     option.resizeMode = resizeMode;//控制照片尺寸
-    //option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;//控制照片质量
+    option.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;//控制照片质量
     option.networkAccessAllowed = YES;
     
     /*

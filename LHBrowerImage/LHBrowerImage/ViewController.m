@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import "LHGroupViewController.h"
 #import "LHCollectionViewController.h"
+@interface ViewController()
+@property (nonatomic,strong) UIImageView *testImage;
+@end
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -16,6 +19,10 @@
     // Do any additional setup after loading the view, typically from
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加照片" style:UIBarButtonItemStylePlain target:self action:@selector(toAdd)];
+   
+    self.testImage = [[UIImageView alloc]init];
+    self.testImage.frame = CGRectMake(10, 100, 300, 300);
+    [self.view addSubview:self.testImage];
     
 }
 
@@ -37,6 +44,12 @@
 #pragma mark -获取本地图片
 -(void)acquireLocal{
     LHGroupViewController *group = [[LHGroupViewController alloc]init];
+    group.backImageArray = ^(id x){
+        PHAsset *asset = x;
+        [[LHPhotoList sharePhotoTool] requestImageForAsset:asset size:CGSizeMake(65*3, 65*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+            self.testImage.image = image;
+        }];
+    };
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:group] animated:YES completion:nil];
 }
 

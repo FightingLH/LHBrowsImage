@@ -27,6 +27,7 @@
     [self tableView];//创建tableview
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(backHome)];
 }
+
 #pragma mark -返回
 -(void)backHome{
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -57,23 +58,32 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = album.title;
     return cell;
-    
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _listArray.count;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%@",_listArray[indexPath.row].title);
     LHCollectionViewController *collect = [[LHCollectionViewController alloc]init];
+    collect.imageBlockArray = ^(id x){
+        if (x) {
+            self.backImageArray(x);
+        }
+    };
     collect.album = _listArray[indexPath.row];
     [self.navigationController pushViewController:collect animated:YES];
 }
+
 -(void)dealloc{
     NSLog(@"%s",__FUNCTION__);
 }

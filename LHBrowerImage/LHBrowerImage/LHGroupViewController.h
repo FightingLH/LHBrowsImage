@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void(^backArrayBlock)(id x);
 @interface LHGroupViewController : UIViewController
-
+@property (nonatomic,copy)backArrayBlock backImageArray;
 @end

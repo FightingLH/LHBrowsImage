@@ -11,7 +11,6 @@
 
 @interface VZTPhotoListCell : UICollectionViewCell
 @property (strong,nonatomic) UIImageView *imageView;
-@property (assign,nonatomic) BOOL isChoose;//是否选择
 @property (nonatomic,strong)UIButton *selectBtn;//是否选择
 
 @end
@@ -20,6 +19,8 @@
 -(void)backImage:(NSArray *)image;//
 @end
 
+typedef void(^imageBlock)(id x);
 @interface LHCollectionViewController : UIViewController
 @property (nonatomic,strong) LHPhotoAblumList *album;
+@property (nonatomic,copy) imageBlock imageBlockArray;
 @end
