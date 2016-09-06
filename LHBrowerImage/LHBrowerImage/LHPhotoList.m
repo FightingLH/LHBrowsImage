@@ -106,7 +106,7 @@ static LHPhotoList *sharePhotoTool = nil;
     [smartAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
         //过滤掉视频和最近删除
         if(collection.assetCollectionSubtype != 202 && collection.assetCollectionSubtype < 212){
-             __strong typeof(weakSelf) strongSelf = weakSelf;
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             NSArray<PHAsset *> *assets = [strongSelf getAssetsInAssetCollection:collection ascending:NO];
             if (assets.count > 0) {
                 LHPhotoAblumList *ablum = [[LHPhotoAblumList alloc] init];
@@ -197,7 +197,7 @@ static LHPhotoList *sharePhotoTool = nil;
      */
     
     option.resizeMode = resizeMode;//控制照片尺寸
-    //    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;//控制照片质量
+    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;//控制照片质量
     option.networkAccessAllowed = YES;
     
     /*

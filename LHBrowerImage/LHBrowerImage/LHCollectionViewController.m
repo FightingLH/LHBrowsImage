@@ -137,7 +137,6 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     [self.view addSubview:_toolBar];
 }
 #pragma mark -选择完返回数据
-#pragma mark -选择完成之后返回
 -(void)clickFinish{
     self.imageBlockArray(self.assArray);
     [self toHome];

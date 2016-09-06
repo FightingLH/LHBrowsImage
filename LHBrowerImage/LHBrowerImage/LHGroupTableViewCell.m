@@ -41,17 +41,17 @@ RectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 -(void)createUI{
     
     UIImageView *leftImage = [[UIImageView alloc]init];
-    leftImage.frame = RectMake(0, 0, 60, 60);
+    leftImage.frame = RectMake(0, 0, 72, 72);
     [self.contentView addSubview:leftImage];
     self.leftImageView = leftImage;
     UILabel *name = [[UILabel alloc]init];
-    name.frame = RectMake(70, 15, 220, 30);
+    name.frame = RectMake(82, 21, 220, 30);
     name.textAlignment = NSTextAlignmentLeft;
     name.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:name];
     self.nameLabel = name;
     UIImageView *rightImage = [[UIImageView alloc]init];
-    rightImage.frame = RectMake(293, (60-11.5)/2, 7, 11.5);
+    rightImage.frame = RectMake(293, (72-11.5)/2, 7, 11.5);
     rightImage.image = [UIImage imageNamed:@"icon01@2x"];
     [self.contentView addSubview:rightImage];
     
@@ -66,7 +66,7 @@ RectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 #pragma mark -显示
 -(void)configUi:(LHPhotoAblumList *)album{
     
-    [[LHPhotoList sharePhotoTool] requestImageForAsset:album.headImageAsset size:CGSizeMake(65*3, 65*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+    [[LHPhotoList sharePhotoTool] requestImageForAsset:album.headImageAsset size:CGSizeMake(72*3, 72*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
         self.leftImageView.image = image;
     }];
     self.nameLabel.text = [NSString stringWithFormat:@"%@ (%ld)",album.title,album.count];
