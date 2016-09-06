@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "LHGroupViewController.h"
 #import "LHCollectionViewController.h"
-#define imageWidth  72
+#import "LHConst.h"
 @interface ViewController()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (nonatomic,strong) NSMutableArray *imageArray;//存放处理完的图片
 @property (nonatomic,strong) UIScrollView *scrolView;//滚动视图
@@ -37,7 +37,7 @@
 #pragma mark --
 -(void)setScrol{
     UIScrollView *scrol = [[UIScrollView alloc]init];
-    scrol.frame = CGRectMake(0, 100, 320, 77);
+    scrol.frame = CGRectMake(0, 100*(SCREEN_HEIGHT/568), 320*(SCREEN_WIDTH/320), 77*(SCREEN_HEIGHT/568));
     [self.view addSubview:scrol];
     self.scrolView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.scrolView = scrol;
@@ -98,14 +98,19 @@
     };
     //写入本地
     [[LHPhotoList sharePhotoTool]saveImageToAblum:originalImage completion:^(BOOL suc, PHAsset *asset) {
-        if (suc) {//存取成功
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (suc) {//存成功
+            [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                 originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
                 imageBlock(originalImage);
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    dismissBlock();
-                });
-            });
+                dismissBlock();
+            }];
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
+//                imageBlock(originalImage);
+//                dispatch_sync(dispatch_get_main_queue(), ^{
+//                    dismissBlock();
+//                });
+//            });
         }else{//存取失败
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
@@ -135,13 +140,15 @@
 -(void)acquireLocal{
     LHGroupViewController *group = [[LHGroupViewController alloc]init];
     group.maxChooseNumber = 15;
+    __weak ViewController *weakSelf = self;
     group.backImageArray = ^(NSMutableArray<PHAsset *> *array){
+        __strong ViewController *strongSelf = weakSelf;
         if (array) {
             for (int i = 0; i<array.count; i++) {
                 PHAsset *asset = array[i];
                 [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                     [_imageArray addObject:image];
-                    [self setSpread];
+                    [strongSelf setSpread];
                 }];
             }
         }
@@ -152,7 +159,7 @@
 #pragma mark -展示UI在界面
 -(void)setSpread{
     
-    self.scrolView.contentSize = CGSizeMake((imageWidth+10)*self.imageArray.count, 77);
+    self.scrolView.contentSize = CGSizeMake((imageWidth+10)*self.imageArray.count, 77*(SCREEN_HEIGHT/568));
     for (NSInteger i = self.scrollSubViews.count; i<self.imageArray.count; i++) {
         UIView *itemView = [[UIView alloc]init];
         itemView.frame = CGRectMake(imageWidth*i+10*i, 5, imageWidth, imageWidth);

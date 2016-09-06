@@ -7,8 +7,7 @@
 //
 
 #import "LHGroupTableViewCell.h"
-#define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
+#import "LHConst.h"
 CG_INLINE CGRect
 RectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 {

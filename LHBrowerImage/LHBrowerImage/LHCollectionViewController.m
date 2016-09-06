@@ -9,11 +9,9 @@
 #import "LHCollectionViewController.h"
 #import "LHPhotoList.h"
 #import "ViewController.h"
-
+#import "LHConst.h"
 const CGFloat imageSpacing = 2.0f;//图片间距
 const NSInteger maxCountInLine = 4;//每行显示图片的张数
-#define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 @interface VZTPhotoListCell()
 @property (nonatomic,assign) BOOL isChoose;//是否选择
 @property (nonatomic,strong) UIImageView *imageView;
