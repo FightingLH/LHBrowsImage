@@ -33,6 +33,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加照片" style:UIBarButtonItemStylePlain target:self action:@selector(toAdd)];
     [self setScrol];
 }
+
 #pragma mark --
 -(void)setScrol{
     UIScrollView *scrol = [[UIScrollView alloc]init];
@@ -42,6 +43,7 @@
     self.scrolView = scrol;
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
+
 #pragma mark --
 -(void)toAdd{
     UIAlertController *alert = [[UIAlertController alloc]init];
@@ -76,6 +78,7 @@
     }
     
 }
+
 #pragma mark --
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info {
     __block UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -114,12 +117,14 @@
         }
     }];
 }
+
 #pragma mark --
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     NSLog(@"您取消了选择图片");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 #pragma mark --
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

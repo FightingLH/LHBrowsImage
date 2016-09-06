@@ -57,7 +57,10 @@ static LHPhotoList *sharePhotoTool = nil;
                 if (completion) completion(NO, nil);
                 return;
             }
-            
+            if(assetId == nil){
+                if (completion) completion(NO,nil);
+                return;
+            }
             PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetId] options:nil].lastObject;
             
             PHAssetCollection *desCollection = [self getDestinationCollection];
