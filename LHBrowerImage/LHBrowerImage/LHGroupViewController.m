@@ -11,8 +11,8 @@
 #import "LHGroupTableViewCell.h"
 #import "LHCollectionViewController.h"
 @interface LHGroupViewController ()<UITableViewDelegate,UITableViewDataSource,PHPhotoLibraryChangeObserver>
-@property (nonatomic,strong) NSMutableArray<LHPhotoAblumList *> *listArray;//所有的相册列表
-@property (nonatomic,strong) NSMutableArray<PHAsset *> *contentArray;//里面所有的相册
+@property (nonatomic,strong) NSMutableArray<LHPhotoAblumList *> *listArray;//all photos
+@property (nonatomic,strong) NSMutableArray<PHAsset *> *contentArray;//all asset
 @property (nonatomic,strong) UITableView *tableView;
 @end
 
@@ -21,11 +21,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"照片";
     _listArray = [NSMutableArray new];
     _contentArray = [NSMutableArray new];
     //先判断是否能获取相册
-    
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
         NSLog(@"暂无访问权限");
@@ -38,7 +38,11 @@
     [self tableView];//创建tableview
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
 }
-#pragma mark -协议 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear: animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+#pragma mark -delegate
 -(void)photoLibraryDidChange:(PHChange *)changeInstance{
     __weak LHGroupViewController *weakSelf = self;
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -49,7 +53,7 @@
     });
     
 }
-#pragma mark -返回
+#pragma mark -back
 -(void)backHome{
     [self dismissViewControllerAnimated:YES completion:nil];
 }

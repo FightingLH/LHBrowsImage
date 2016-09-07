@@ -10,6 +10,8 @@
 #import "LHPhotoList.h"
 #import "ViewController.h"
 #import "LHConst.h"
+
+#import "LHBrowsingImageView.h"
 const CGFloat imageSpacing = 2.0f;//图片间距
 const NSInteger maxCountInLine = 4;//每行显示图片的张数
 @interface VZTPhotoListCell()
@@ -25,15 +27,22 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
         _imageView = [[UIImageView alloc]initWithFrame:self.bounds];
         //显示的时候做一个处理
         [self.contentView addSubview:_imageView];
-        _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 23, frame.size.height - 23, 18, 18)];
+        _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 28, 18+5, 18+5)];
         _selectBtn.clipsToBounds = YES;
         [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_normal"] forState:UIControlStateNormal];
         [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_seleceted"] forState:UIControlStateSelected];
-        _selectBtn.userInteractionEnabled = NO;
+        [_selectBtn addTarget:self action:@selector(btnChoose) forControlEvents:UIControlEventTouchUpInside];
+        _selectBtn.userInteractionEnabled = YES;
         [self.contentView addSubview:_selectBtn];
     }
     return self;
 }
+
+#pragma mark -按钮选择
+-(void)btnChoose{
+    self.btnChooseBlock();
+}
+
 //图片是否被选中
 -(void)setIsChoose:(BOOL)isChoose{
     _isChoose = isChoose;
@@ -54,7 +63,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
 @end
 
 @implementation LHCollectionViewController
-#pragma mark -懒加载
+#pragma mark -lazy loading
 -(UICollectionView *)collectionView{
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
@@ -88,6 +97,11 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(toGroup)];
     [self setToBar];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear: animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+#pragma mark --toolBar
 -(void)setToBar{
     _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 44, [UIScreen mainScreen].bounds.size.width, 44)];
     _toolBar.backgroundColor = [UIColor colorWithRed:0.98f green:0.98f blue:0.98f alpha:1.00f];
@@ -134,20 +148,21 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     [_toolBar addSubview:layerBtn];
     [self.view addSubview:_toolBar];
 }
-#pragma mark -选择完返回数据
+#pragma mark -back choose imageArray
 -(void)clickFinish{
     self.imageBlockArray(self.assArray);
     [self toHome];
 }
+#pragma mark -back group
 -(void)toGroup{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mark -back first page
 -(void)toHome{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark -代理
+#pragma mark -delegate
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
@@ -165,12 +180,16 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
         cell.imageView.image = image;
     }];
     cell.isChoose = [_selectedFalgList[indexPath.row]boolValue];
+    cell.btnChooseBlock = ^{
+        [self isChooseOrNot:indexPath];
+    };
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+#pragma mark -choose or not
+-(void)isChooseOrNot:(NSIndexPath *)indexPath{
     _selectedFalgList[indexPath.row] = [NSNumber numberWithBool:![_selectedFalgList[indexPath.row]boolValue]];
-    VZTPhotoListCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+    VZTPhotoListCell *cell = (id)[_collectionView cellForItemAtIndexPath:indexPath];
     cell.isChoose = [_selectedFalgList[indexPath.row]boolValue];
     PHAsset *asset = self.assetArray[indexPath.row];
     if (cell.isChoose) {
@@ -198,6 +217,16 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     //给值
     _label.text = [NSString stringWithFormat:@"(%ld)",self.assArray.count];
     _leReadLabel.text = [NSString stringWithFormat:@"还能选择%ld张照片",self.maxChooseNumber - self.assArray.count];
+
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    LHBrowsingImageView *browsing = [[LHBrowsingImageView alloc]init];
+    browsing.assetBigArray = [NSMutableArray arrayWithArray:self.assetArray];
+    browsing.index = indexPath.row;
+    [self.navigationController pushViewController:browsing animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

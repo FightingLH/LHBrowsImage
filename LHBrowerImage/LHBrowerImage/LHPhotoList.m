@@ -32,7 +32,7 @@ static LHPhotoList *sharePhotoTool = nil;
     return sharePhotoTool;
 }
 
-#pragma mark - 保存图片到系统相册
+#pragma mark - save image to photos
 - (void)saveImageToAblum:(UIImage *)image completion:(void (^)(BOOL, PHAsset *))completion
 {
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
@@ -92,7 +92,7 @@ static LHPhotoList *sharePhotoTool = nil;
     return [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionId] options:nil].lastObject;
 }
 
-#pragma mark - 获取所有相册列表
+#pragma mark - list albums
 - (NSArray<LHPhotoAblumList *> *)getPhotoAblumList
 {
     NSMutableArray<LHPhotoAblumList *> *photoAblumList = [NSMutableArray array];
@@ -141,7 +141,7 @@ static LHPhotoList *sharePhotoTool = nil;
     return result;
 }
 
-#pragma mark - 获取相册内所有照片资源
+#pragma mark - all photos
 - (NSArray<PHAsset *> *)getAllAssetInPhotoAblumWithAscending:(BOOL)ascending
 {
     NSMutableArray<PHAsset *> *assets = [NSMutableArray array];
@@ -293,8 +293,10 @@ static LHPhotoList *sharePhotoTool = nil;
         photoName = @"QQ";
     }else if([englishName isEqualToString:@"My Photo Stream"]){
         photoName = @"我的照片流";
+    }else if([englishName isEqualToString:@"LHBrowerImage"]){
+        photoName = @"测试";
     }else{
-        photoName = @"englishName";
+        photoName = [NSString stringWithFormat:@"%@",englishName];
     }
     return photoName;
 }

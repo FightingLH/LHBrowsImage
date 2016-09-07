@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LHPhotoList.h"
-
+typedef void(^cellChooseBlock)(void);//是否选中
 @interface VZTPhotoListCell : UICollectionViewCell
+@property (nonatomic,copy) cellChooseBlock btnChooseBlock;//选中按钮
 @end
 
 @protocol LHCollectionViewControllerDelegate <NSObject>

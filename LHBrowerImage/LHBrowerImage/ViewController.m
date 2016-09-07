@@ -104,13 +104,6 @@
                 imageBlock(originalImage);
                 dismissBlock();
             }];
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
-//                imageBlock(originalImage);
-//                dispatch_sync(dispatch_get_main_queue(), ^{
-//                    dismissBlock();
-//                });
-//            });
         }else{//存取失败
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];

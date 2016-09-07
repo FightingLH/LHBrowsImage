@@ -62,7 +62,7 @@ RectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     // Configure the view for the selected state
 }
 
-#pragma mark -显示
+#pragma mark -show ui
 -(void)configUi:(LHPhotoAblumList *)album{
     
     [[LHPhotoList sharePhotoTool] requestImageForAsset:album.headImageAsset size:CGSizeMake(72*3, 72*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {

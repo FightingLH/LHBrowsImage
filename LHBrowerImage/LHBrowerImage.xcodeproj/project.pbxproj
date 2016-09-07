@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */; };
 		EB4A5E251D7D02BC0005F211 /* LHGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */; };
 		EB60E3641D79723000DD7E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3631D79723000DD7E7F /* main.m */; };
 		EB60E3671D79723000DD7E7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3661D79723000DD7E7F /* AppDelegate.m */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB3DB8371D7FA42400A2E947 /* LHBrowsingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHBrowsingImageView.h; sourceTree = "<group>"; };
+		EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBrowsingImageView.m; sourceTree = "<group>"; };
 		EB4A5E231D7D02BC0005F211 /* LHGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHGroupTableViewCell.h; sourceTree = "<group>"; };
 		EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHGroupTableViewCell.m; sourceTree = "<group>"; };
 		EB60E35F1D79723000DD7E7F /* LHBrowerImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LHBrowerImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +168,8 @@
 				EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */,
 				EB60E39B1D79726A00DD7E7F /* LHPhotoList.h */,
 				EB60E39C1D79727000DD7E7F /* LHPhotoList.m */,
+				EB3DB8371D7FA42400A2E947 /* LHBrowsingImageView.h */,
+				EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */,
 				EB86C5931D7EC47100E57421 /* LHConst.h */,
 			);
 			name = imageBrower;
@@ -305,6 +310,7 @@
 				EB60E3671D79723000DD7E7F /* AppDelegate.m in Sources */,
 				EB60E3971D79725600DD7E7F /* LHCollectionViewController.m in Sources */,
 				EB60E39A1D79726300DD7E7F /* LHGroupViewController.m in Sources */,
+				EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */,
 				EB60E39D1D79727000DD7E7F /* LHPhotoList.m in Sources */,
 				EB60E3641D79723000DD7E7F /* main.m in Sources */,
 			);
