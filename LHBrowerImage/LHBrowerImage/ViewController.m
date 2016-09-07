@@ -97,8 +97,8 @@
         }];
     };
     //写入本地
-    [[LHPhotoList sharePhotoTool]saveImageToAblum:originalImage completion:^(BOOL suc, PHAsset *asset) {
-        if (suc) {//存成功
+    [[LHPhotoList sharePhotoTool]saveImageToAblum:originalImage completion:^(BOOL success, PHAsset *asset) {
+        if (success) {//存成功
             [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
                 originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
                 imageBlock(originalImage);
@@ -132,7 +132,7 @@
 #pragma mark -获取本地图片
 -(void)acquireLocal{
     LHGroupViewController *group = [[LHGroupViewController alloc]init];
-    group.maxChooseNumber = 15;
+    group.maxChooseNumber = 80;
     __weak ViewController *weakSelf = self;
     group.backImageArray = ^(NSMutableArray<PHAsset *> *array){
         __strong ViewController *strongSelf = weakSelf;

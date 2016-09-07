@@ -294,7 +294,7 @@ static LHPhotoList *sharePhotoTool = nil;
     }else if([englishName isEqualToString:@"My Photo Stream"]){
         photoName = @"我的照片流";
     }else if([englishName isEqualToString:@"LHBrowerImage"]){
-        photoName = @"测试";
+    photoName = @"测试";
     }else{
         photoName = [NSString stringWithFormat:@"%@",englishName];
     }

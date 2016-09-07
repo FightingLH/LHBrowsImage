@@ -60,6 +60,9 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
 @property (nonatomic,strong) UILabel  *label;
 @property (nonatomic,strong) UILabel  *remainLabel;
 @property (nonatomic,strong) UILabel  *leReadLabel;
+
+//
+@property (nonatomic,strong) NSMutableArray *fuzzyImageArray;//模糊图片
 @end
 
 @implementation LHCollectionViewController
@@ -87,6 +90,8 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     self.title = self.album.title;
     self.view.backgroundColor = [UIColor whiteColor];
     self.selectedFalgList = [NSMutableArray new];
+    self.fuzzyImageArray = [NSMutableArray new];
+    [self.fuzzyImageArray removeAllObjects];
     self.assArray = [NSMutableArray new];
     self.assetArray =  [[LHPhotoList sharePhotoTool]getAssetsInAssetCollection:self.album.assetCollection ascending:NO];
     for (int i = 0;i<self.assetArray.count;i++) {
@@ -178,6 +183,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     }
     [[LHPhotoList sharePhotoTool] requestImageForAsset:self.assetArray[indexPath.row] size:CGSizeMake(65*3, 65*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
         cell.imageView.image = image;
+        [self.fuzzyImageArray addObject:image];
     }];
     cell.isChoose = [_selectedFalgList[indexPath.row]boolValue];
     cell.btnChooseBlock = ^{
@@ -217,15 +223,17 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     //给值
     _label.text = [NSString stringWithFormat:@"(%ld)",self.assArray.count];
     _leReadLabel.text = [NSString stringWithFormat:@"还能选择%ld张照片",self.maxChooseNumber - self.assArray.count];
-
+    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     LHBrowsingImageView *browsing = [[LHBrowsingImageView alloc]init];
     browsing.assetBigArray = [NSMutableArray arrayWithArray:self.assetArray];
+    browsing.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    browsing.fuzzyArray = self.fuzzyImageArray;
     browsing.index = indexPath.row;
-    [self.navigationController pushViewController:browsing animated:YES];
+    [self.navigationController presentViewController:browsing animated:YES completion:nil];
     
 }
 

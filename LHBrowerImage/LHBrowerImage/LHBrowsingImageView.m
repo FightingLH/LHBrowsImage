@@ -51,9 +51,18 @@
     for (int i=0; i<self.assetBigArray.count; i++) {
         //图片
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, scrollView.frame.size.height)];
+        if (i<self.fuzzyArray.count) {
+            //
+//            imageView.image = self.fuzzyArray[i];
+        }else{
+            
+        }
         [[LHPhotoList sharePhotoTool]requestImageForAsset:self.assetBigArray[i] size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
             imageView.image = image;
         }];
+        imageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doneAction:)];
+        [imageView addGestureRecognizer:gesture];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [scrollView addSubview:imageView];
     }
