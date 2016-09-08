@@ -15,8 +15,7 @@
 @property (nonatomic,strong) UIScrollView *scrolView;//滚动视图
 @property (nonatomic,strong) NSMutableArray *scrollSubViews;//存放图片子视图
 @property (nonatomic,strong) NSMutableArray *scrollSubFrame;//子视图的frame
-
-@property (nonatomic,strong) NSMutableArray *needUploadArray;// 最终须要上传的图片
+@property (nonatomic,strong) NSMutableArray *localLength;//每张图片的尺寸
 
 @end
 
@@ -29,9 +28,19 @@
     self.imageArray = [NSMutableArray new];
     self.scrollSubViews = [NSMutableArray new];
     self.scrollSubFrame = [NSMutableArray new];
-    self.needUploadArray = [NSMutableArray new];
+    self.localLength = [NSMutableArray new];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加照片" style:UIBarButtonItemStylePlain target:self action:@selector(toAdd)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"上传照片" style:UIBarButtonItemStylePlain target:self action:@selector(toUpload)];
     [self setScrol];
+}
+
+#pragma mark -上传
+-(void)toUpload{
+    for (int i = 0; i<self.imageArray.count; i++) {
+        NSData *data = UIImageJPEGRepresentation(self.imageArray[i], 0.5);
+        NSString *string = self.localLength[i];
+        NSLog(@"%@---%lu",string,(unsigned long)data.length);
+    }
 }
 
 #pragma mark --
@@ -76,7 +85,6 @@
     {
         NSLog(@"模拟其中无法打开照相机,请在真机中使用");
     }
-    
 }
 
 #pragma mark --
@@ -88,6 +96,8 @@
         if (!image) {
             image = [info objectForKey:UIImagePickerControllerOriginalImage];
         }
+        NSString *length  = [NSString stringWithFormat:@"%f*%f",image.size.width,image.size.height];
+        [strongSelf.localLength addObject:length];
         [strongSelf.imageArray addObject:image];
     };
     void(^dismissBlock)() = ^(){//声明
@@ -100,13 +110,13 @@
     [[LHPhotoList sharePhotoTool]saveImageToAblum:originalImage completion:^(BOOL success, PHAsset *asset) {
         if (success) {//存成功
             [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
+                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 1) scale:originalImage.scale];
                 imageBlock(originalImage);
                 dismissBlock();
             }];
         }else{//存取失败
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 0.1) scale:originalImage.scale];
+                originalImage = [UIImage imageWithData:UIImageJPEGRepresentation(originalImage, 1) scale:originalImage.scale];
                 imageBlock(originalImage);
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     dismissBlock();
@@ -119,7 +129,6 @@
 #pragma mark --
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    NSLog(@"您取消了选择图片");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -140,6 +149,8 @@
             for (int i = 0; i<array.count; i++) {
                 PHAsset *asset = array[i];
                 [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+                    NSString *length  = [NSString stringWithFormat:@"%f*%f",image.size.width,image.size.height];
+                    [_localLength addObject:length];
                     [_imageArray addObject:image];
                     [strongSelf setSpread];
                 }];
@@ -190,6 +201,7 @@
     NSInteger idx = [_scrollSubViews indexOfObject:view];
     [_scrollSubViews removeObject:view];
     [_imageArray removeObjectAtIndex:idx];
+    [_localLength removeObjectAtIndex:idx];
     [_scrollSubFrame removeLastObject];
     [UIView animateWithDuration:0.2 animations:^{
         view.alpha = 0;
