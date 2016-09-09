@@ -17,8 +17,8 @@ RectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     return rect;
 }
 @interface LHGroupTableViewCell()
-@property (nonatomic,strong) UIImageView *leftImageView;//左边的图片
-@property (nonatomic,strong) UILabel *nameLabel;//相册名字
+@property (nonatomic,strong) UIImageView *leftImageView;//left image
+@property (nonatomic,strong) UILabel *nameLabel;//album name
 @end
 
 @implementation LHGroupTableViewCell

@@ -59,7 +59,7 @@ static LHPhotoList *sharePhotoTool = nil;
             PHAssetCollection *desCollection = [self getDestinationCollection];
             if (!desCollection) completion(NO, nil);
             
-            //保存图片
+            //save image
             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                 [[PHAssetCollectionChangeRequest changeRequestForAssetCollection:desCollection] addAssets:@[asset]];
             } completionHandler:^(BOOL success, NSError * _Nullable error) {
@@ -69,24 +69,24 @@ static LHPhotoList *sharePhotoTool = nil;
     }
 }
 
-//获取自定义相册
+//To get custom photo album
 - (PHAssetCollection *)getDestinationCollection
 {
-    //找是否已经创建自定义相册
+    //To find whether have created a custom photo album
     PHFetchResult<PHAssetCollection *> *collectionResult = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
     for (PHAssetCollection *collection in collectionResult) {
         if ([collection.localizedTitle isEqualToString:CollectionName]) {
             return collection;
         }
     }
-    //新建自定义相册
+    //The new custom photo album
     __block NSString *collectionId = nil;
     NSError *error = nil;
     [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
         collectionId = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:CollectionName].placeholderForCreatedAssetCollection.localIdentifier;
     } error:&error];
     if (error) {
-        NSLog(@"创建相册：%@失败", CollectionName);
+        NSLog(@"create album：%@failed", CollectionName);
         return nil;
     }
     return [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[collectionId] options:nil].lastObject;
@@ -97,10 +97,10 @@ static LHPhotoList *sharePhotoTool = nil;
 {
     NSMutableArray<LHPhotoAblumList *> *photoAblumList = [NSMutableArray array];
     __weak typeof(self) weakSelf = self;
-    //获取所有智能相册
+    //Get all the smart albums
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
     [smartAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
-        //过滤掉视频和最近删除
+        //The filtered video and recently removed
         if(collection.assetCollectionSubtype != 202 && collection.assetCollectionSubtype < 212){
             __strong typeof(weakSelf) strongSelf = weakSelf;
             NSArray<PHAsset *> *assets = [strongSelf getAssetsInAssetCollection:collection ascending:NO];
@@ -115,7 +115,7 @@ static LHPhotoList *sharePhotoTool = nil;
         }
     }];
     
-    //获取用户创建的相册
+    //For users to create photo albums
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -147,7 +147,7 @@ static LHPhotoList *sharePhotoTool = nil;
     NSMutableArray<PHAsset *> *assets = [NSMutableArray array];
     
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
-    //ascending 为YES时，按照照片的创建时间升序排列;为NO时，则降序排列
+    //ascending To YES, according to the pictures the creation time of ascending;To NO, the descending order
     option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:ascending]];
     
     PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:option];
@@ -160,7 +160,7 @@ static LHPhotoList *sharePhotoTool = nil;
     return assets;
 }
 
-#pragma mark - 获取指定相册内的所有图片
+#pragma mark - For all images within a specified album
 - (NSArray<PHAsset *> *)getAssetsInAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending
 {
     NSMutableArray<PHAsset *> *arr = [NSMutableArray array];
@@ -174,10 +174,10 @@ static LHPhotoList *sharePhotoTool = nil;
     return arr;
 }
 
-#pragma mark - 获取asset对应的图片
+#pragma mark - To obtain the asset corresponding pictures
 - (void)requestImageForAsset:(PHAsset *)asset size:(CGSize)size resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void (^)(UIImage *, NSDictionary *))completion
 {
-    //请求大图界面，当切换图片时，取消上一张图片的请求，对于iCloud端的图片，可以节省流量
+    //Request a larger screen, when switching images, cancel a picture on request, for up to the pictures, can save the traffic
     static PHImageRequestID requestID = -1;
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat width = MIN(kViewWidth, kMaxImageWidth);
@@ -187,26 +187,26 @@ static LHPhotoList *sharePhotoTool = nil;
     
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
     /**
-     resizeMode：对请求的图像怎样缩放。有三种选择：None，默认加载方式；Fast，尽快地提供接近或稍微大于要求的尺寸；Exact，精准提供要求的尺寸。
-     deliveryMode：图像质量。有三种值：Opportunistic，在速度与质量中均衡；HighQualityFormat，不管花费多长时间，提供高质量图像；FastFormat，以最快速度提供好的质量。
-     这个属性只有在 synchronous 为 true 时有效。
+     resizeMode：For the request of image zooming.There are three options: None, the default load;Fast, as soon as possible to provide close to or slightly greater than the required size;Exact and accurate to provide the size of the requirements.
+     deliveryMode：Image quality.There are three values: Opportunistic, balanced in speed and quality;HighQualityFormat, no matter how long it takes, provides the high quality images;FastFormat, with the fastest speed to provide good quality.
+     This attribute is only valid at the time of synchronous to true.
      */
     
-    option.resizeMode = resizeMode;//控制照片尺寸
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;//控制照片质量
+    option.resizeMode = resizeMode;//Control the photo size
+    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;//Control the quality
     option.networkAccessAllowed = YES;
     
     /*
-     info字典提供请求状态信息:
-     PHImageResultIsInCloudKey：图像是否必须从iCloud请求
-     PHImageResultIsDegradedKey：当前UIImage是否是低质量的，这个可以实现给用户先显示一个预览图
-     PHImageResultRequestIDKey和PHImageCancelledKey：请求ID以及请求是否已经被取消
-     PHImageErrorKey：如果没有图像，字典内的错误信息
+     info Dictionaries provide request status information:
+     PHImageResultIsInCloudKey：Whether the image must be from up to the request
+     PHImageResultIsDegradedKey：The current UIImage is low quality, this can be achieved to the user to display a preview first
+     PHImageResultRequestIDKey和PHImageCancelledKey：Request ID and whether the request has been cancelled
+     PHImageErrorKey：If there is no image, in the dictionary of error information
      */
     
     requestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFit options:option resultHandler:^(UIImage * _Nullable image, NSDictionary * _Nullable info) {
         BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey];
-        //不要该判断，即如果该图片在iCloud上时候，会先显示一张模糊的预览图，待加载完毕后会显示高清图
+        //Don't the judgment, that is, if the picture on the up, will first show a vague preview and after being loaded Gao Qingtu will be shown
         // && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]
         if (downloadFinined && completion) {
             completion(image, info);
@@ -217,7 +217,7 @@ static LHPhotoList *sharePhotoTool = nil;
 - (void)requestImageForAsset:(PHAsset *)asset scale:(CGFloat)scale resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void (^)(UIImage *image))completion
 {
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.resizeMode = resizeMode;//控制照片尺寸
+    option.resizeMode = resizeMode;//Control the photo size
     option.networkAccessAllowed = YES;
     
     [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset options:option resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
@@ -255,7 +255,7 @@ static LHPhotoList *sharePhotoTool = nil;
     }];
     return isInLocalAblum;
 }
-//暂时不需要
+//Temporarily do not need to
 //- (void)getPhotosBytesWithArray:(NSArray *)photos completion:(void (^)(NSString *photosBytes))completion
 //{
 //    __block NSInteger dataLength = 0;

@@ -15,17 +15,16 @@
 const CGFloat imageSpacing = 2.0f;//图片间距
 const NSInteger maxCountInLine = 4;//每行显示图片的张数
 @interface VZTPhotoListCell()
-@property (nonatomic,assign) BOOL isChoose;//是否选择
+@property (nonatomic,assign) BOOL isChoose;
 @property (nonatomic,strong) UIImageView *imageView;
-@property (nonatomic,strong) UIButton *selectBtn;//是否选择
+@property (nonatomic,strong) UIButton *selectBtn;
 @end
 @implementation VZTPhotoListCell
 
--(instancetype)initWithFrame:(CGRect)frame{ //初始化cell的大小
+-(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         _imageView = [[UIImageView alloc]initWithFrame:self.bounds];
-        //显示的时候做一个处理
         [self.contentView addSubview:_imageView];
         _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 28, 18+5, 18+5)];
         _selectBtn.clipsToBounds = YES;
@@ -38,12 +37,10 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     return self;
 }
 
-#pragma mark -按钮选择
 -(void)btnChoose{
     self.btnChooseBlock();
 }
 
-//图片是否被选中
 -(void)setIsChoose:(BOOL)isChoose{
     _isChoose = isChoose;
     _selectBtn.selected = isChoose;
@@ -220,7 +217,6 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
         _label.hidden = NO;
         _remainLabel.hidden = NO;
     }
-    //给值
     _label.text = [NSString stringWithFormat:@"(%ld)",self.assArray.count];
     _leReadLabel.text = [NSString stringWithFormat:@"还能选择%ld张照片",self.maxChooseNumber - self.assArray.count];
     
@@ -231,7 +227,6 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     LHBrowsingImageView *browsing = [[LHBrowsingImageView alloc]init];
     browsing.assetBigArray = [NSMutableArray arrayWithArray:self.assetArray];
     browsing.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    browsing.fuzzyArray = self.fuzzyImageArray;
     browsing.index = indexPath.row;
     [self.navigationController presentViewController:browsing animated:YES completion:nil];
     

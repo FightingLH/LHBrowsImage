@@ -25,7 +25,7 @@
     self.title = @"照片";
     _listArray = [NSMutableArray new];
     _contentArray = [NSMutableArray new];
-    //先判断是否能获取相册
+    //To determine whether can get photo album
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusRestricted || status == PHAuthorizationStatusDenied) {
         NSLog(@"暂无访问权限");
@@ -35,7 +35,7 @@
         [self.tableView reloadData];
     }
     [[PHPhotoLibrary sharedPhotoLibrary]registerChangeObserver:self];
-    [self tableView];//创建tableview
+    [self tableView];// tableview
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
 }
 -(void)viewWillAppear:(BOOL)animated{

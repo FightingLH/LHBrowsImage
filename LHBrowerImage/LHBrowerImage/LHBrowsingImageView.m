@@ -5,7 +5,7 @@
 //  Created by lh on 16/9/7.
 //  Copyright © 2016年 lh. All rights reserved.
 //
-//浏览大图类似微信从小图访问大图效果
+//use to brower big image
 #import "LHBrowsingImageView.h"
 #import "LHPhotoList.h"
 #import "LHConst.h"
@@ -19,11 +19,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor blackColor];
-    //图片
     [self setTitle];
     [self createScrollView];
 }
 
+#pragma mark --set Title
 -(void)setTitle{
     _titleLabel = [[UILabel alloc]init];
     _titleLabel.frame = CGRectMake((SCREEN_WIDTH -100)/2, SCREEN_HEIGHT - 54, 100, 44);
@@ -32,31 +32,22 @@
     [self.view addSubview:_titleLabel];
 }
 
+#pragma mark --add Action
 - (void)doneAction:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//滚动视图
+#pragma mark --create scrollView
 - (void)createScrollView
 {
-    //创建滚动视图
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 84, SCREEN_WIDTH, SCREEN_HEIGHT - 84*2)];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.pagingEnabled = YES;
-    //设置代理
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
-    //显示图片
     for (int i=0; i<self.assetBigArray.count; i++) {
-        //图片
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, scrollView.frame.size.height)];
-        if (i<self.fuzzyArray.count) {
-            //
-//            imageView.image = self.fuzzyArray[i];
-        }else{
-            
-        }
         [[LHPhotoList sharePhotoTool]requestImageForAsset:self.assetBigArray[i] size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
             imageView.image = image;
         }];
@@ -76,7 +67,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//状态栏的显示
+#pragma mark --statues view
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
@@ -87,11 +78,10 @@
     return UIStatusBarStyleLightContent;
 }
 
-#pragma mark - UIScrollView代理
+#pragma mark - UIScrollView delegate
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger index = scrollView.contentOffset.x/scrollView.bounds.size.width;
-    //修改标题文字
     _titleLabel.text = [NSString stringWithFormat:@"%ld / %ld",index+1, self.assetBigArray.count];
 }
 
