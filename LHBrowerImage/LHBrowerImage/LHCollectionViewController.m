@@ -26,7 +26,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     if (self) {
         _imageView = [[UIImageView alloc]initWithFrame:self.bounds];
         [self.contentView addSubview:_imageView];
-        _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 28, 18+5, 18+5)];
+        _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 25, frame.size.height - 25, 25, 25)];
         _selectBtn.clipsToBounds = YES;
         [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_normal"] forState:UIControlStateNormal];
         [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_seleceted"] forState:UIControlStateSelected];
@@ -178,13 +178,16 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     if (!cell) {
         cell = [VZTPhotoListCell new];
     }
+     __strong typeof(self) weakSelf = self;
     [[LHPhotoList sharePhotoTool] requestImageForAsset:self.assetArray[indexPath.row] size:CGSizeMake(65*3, 65*3) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+         __strong typeof(weakSelf) strongSelf = weakSelf;
         cell.imageView.image = image;
-        [self.fuzzyImageArray addObject:image];
+        [strongSelf.fuzzyImageArray addObject:image];
     }];
     cell.isChoose = [_selectedFalgList[indexPath.row]boolValue];
     cell.btnChooseBlock = ^{
-        [self isChooseOrNot:indexPath];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf isChooseOrNot:indexPath];
     };
     return cell;
 }

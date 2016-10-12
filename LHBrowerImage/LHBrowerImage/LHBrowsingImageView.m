@@ -46,6 +46,7 @@
     scrollView.pagingEnabled = YES;
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
+    //存在bug
     for (int i=0; i<self.assetBigArray.count; i++) {
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, scrollView.frame.size.height)];
         [[LHPhotoList sharePhotoTool]requestImageForAsset:self.assetBigArray[i] size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
