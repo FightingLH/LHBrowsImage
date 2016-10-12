@@ -242,6 +242,7 @@
 				TargetAttributes = {
 					EB60E35E1D79723000DD7E7F = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = C78VJKGV2J;
 					};
 					EB60E3771D79723000DD7E7F = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -455,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = C78VJKGV2J;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LHBrowerImage/LHConst.h\"";
 				INFOPLIST_FILE = LHBrowerImage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -468,6 +470,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = C78VJKGV2J;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LHBrowerImage/LHConst.h\"";
 				INFOPLIST_FILE = LHBrowerImage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
