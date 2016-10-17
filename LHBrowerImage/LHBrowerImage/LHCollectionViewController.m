@@ -28,8 +28,10 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
         [self.contentView addSubview:_imageView];
         _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 25, frame.size.height - 25, 25, 25)];
         _selectBtn.clipsToBounds = YES;
-        [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_normal"] forState:UIControlStateNormal];
-        [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_seleceted"] forState:UIControlStateSelected];
+        NSString *strNol = [[NSBundle mainBundle]pathForResource:@"gallery_chs_normal" ofType:@"png"];
+        [_selectBtn setImage:[UIImage imageWithContentsOfFile:strNol] forState:UIControlStateNormal];
+        NSString *strSelect = [[NSBundle mainBundle]pathForResource:@"gallery_chs_seleceted" ofType:@"png"];
+        [_selectBtn setImage:[UIImage imageWithContentsOfFile:strSelect] forState:UIControlStateSelected];
         [_selectBtn addTarget:self action:@selector(btnChoose) forControlEvents:UIControlEventTouchUpInside];
         _selectBtn.userInteractionEnabled = YES;
         [self.contentView addSubview:_selectBtn];

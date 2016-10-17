@@ -182,7 +182,8 @@
         UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         deleteBtn.frame = CGRectMake(imageWidth - 17 , -5, 22, 22);
         deleteBtn.tag = 200+i;
-        [deleteBtn setImage:[UIImage imageNamed:@"02"] forState:UIControlStateNormal];//正常显示
+        NSString *strDelete = [[NSBundle mainBundle]pathForResource:@"02" ofType:@"png"];
+        [deleteBtn setImage:[UIImage imageWithContentsOfFile:strDelete] forState:UIControlStateNormal];//正常显示
         [deleteBtn addTarget:self action:@selector(deleteImage:) forControlEvents:UIControlEventTouchUpInside];//删除
         [itemView addSubview:deleteBtn];
         
