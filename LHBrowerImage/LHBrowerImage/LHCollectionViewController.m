@@ -28,10 +28,8 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
         [self.contentView addSubview:_imageView];
         _selectBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 25, frame.size.height - 25, 25, 25)];
         _selectBtn.clipsToBounds = YES;
-        NSString *strNol = [[NSBundle mainBundle]pathForResource:@"gallery_chs_normal" ofType:@"png"];
-        [_selectBtn setImage:[UIImage imageWithContentsOfFile:strNol] forState:UIControlStateNormal];
-        NSString *strSelect = [[NSBundle mainBundle]pathForResource:@"gallery_chs_seleceted" ofType:@"png"];
-        [_selectBtn setImage:[UIImage imageWithContentsOfFile:strSelect] forState:UIControlStateSelected];
+        [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_normal"] forState:UIControlStateNormal];
+        [_selectBtn setImage:[UIImage imageNamed:@"gallery_chs_seleceted"] forState:UIControlStateSelected];
         [_selectBtn addTarget:self action:@selector(btnChoose) forControlEvents:UIControlEventTouchUpInside];
         _selectBtn.userInteractionEnabled = YES;
         [self.contentView addSubview:_selectBtn];
@@ -134,7 +132,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     _remainLabel.textColor = [UIColor whiteColor];
     [btn addSubview:_remainLabel];
     //只能选择图片个数
-    _leReadLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 125, 25)];
+    _leReadLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 145, 25)];
     _leReadLabel.font = [UIFont systemFontOfSize:15.0f];
     _leReadLabel.text = [NSString stringWithFormat:@"还能选择%ld张图片",self.maxChooseNumber - self.assArray.count];
     _leReadLabel.textColor = [UIColor grayColor];
