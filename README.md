@@ -4,7 +4,7 @@ LHPhotoList:此方法用来获取图片、保存图片、等对图片处理的�
 LHGroupViewController:此类实现分组图片展示
 LHCollectionViewController:实现展示所有的图片内容
 LHBrowsingImageView:浏览本地图片
-![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/1)
-![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/2)
-![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/3)
-![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/4)
+![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/1.png)
+![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/2.png)
+![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/3.png)
+![image](https://github.com/FightingLH/LHCalendar/raw/master/image-folder/4.png)
