@@ -10,15 +10,17 @@
 #import "LHPhotoList.h"
 #import "ViewController.h"
 #import "LHConst.h"
-
 #import "LHBrowsingImageView.h"
 const CGFloat imageSpacing = 2.0f;//图片间距
 const NSInteger maxCountInLine = 4;//每行显示图片的张数
+
 @interface VZTPhotoListCell()
 @property (nonatomic,assign) BOOL isChoose;
 @property (nonatomic,strong) UIImageView *imageView;
 @property (nonatomic,strong) UIButton *selectBtn;
+
 @end
+
 @implementation VZTPhotoListCell
 
 -(instancetype)initWithFrame:(CGRect)frame{
@@ -46,6 +48,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     _selectBtn.selected = isChoose;
 }
 @end
+
 
 @interface LHCollectionViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong) NSArray<PHAsset *>*assetArray;//相册集里面的所有图片
@@ -131,7 +134,7 @@ const NSInteger maxCountInLine = 4;//每行显示图片的张数
     _remainLabel.font = [UIFont systemFontOfSize:15.0f];
     _remainLabel.textColor = [UIColor whiteColor];
     [btn addSubview:_remainLabel];
-    //只能选择图片个数
+
     _leReadLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 145, 25)];
     _leReadLabel.font = [UIFont systemFontOfSize:15.0f];
     _leReadLabel.text = [NSString stringWithFormat:@"还能选择%ld张图片",self.maxChooseNumber - self.assArray.count];

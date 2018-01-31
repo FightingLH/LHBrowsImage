@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */; };
 		EB4A5E251D7D02BC0005F211 /* LHGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */; };
-		EB58DDFD1F14BBFC0019A34D /* BeeHiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB58DDFB1F14BBFC0019A34D /* BeeHiveTableViewCell.m */; };
-		EB58DDFE1F14BBFC0019A34D /* BeeHiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB58DDFC1F14BBFC0019A34D /* BeeHiveTableViewCell.xib */; };
 		EB60E3641D79723000DD7E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3631D79723000DD7E7F /* main.m */; };
 		EB60E3671D79723000DD7E7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3661D79723000DD7E7F /* AppDelegate.m */; };
 		EB60E36A1D79723000DD7E7F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3691D79723000DD7E7F /* ViewController.m */; };
@@ -22,7 +20,6 @@
 		EB60E3971D79725600DD7E7F /* LHCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3961D79725600DD7E7F /* LHCollectionViewController.m */; };
 		EB60E39A1D79726300DD7E7F /* LHGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3991D79726300DD7E7F /* LHGroupViewController.m */; };
 		EB60E39D1D79727000DD7E7F /* LHPhotoList.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E39C1D79727000DD7E7F /* LHPhotoList.m */; };
-		EBA767751F1365D100E86731 /* BeeHiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA767741F1365D100E86731 /* BeeHiveViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,9 +44,6 @@
 		EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBrowsingImageView.m; sourceTree = "<group>"; };
 		EB4A5E231D7D02BC0005F211 /* LHGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHGroupTableViewCell.h; sourceTree = "<group>"; };
 		EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHGroupTableViewCell.m; sourceTree = "<group>"; };
-		EB58DDFA1F14BBFC0019A34D /* BeeHiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeHiveTableViewCell.h; sourceTree = "<group>"; };
-		EB58DDFB1F14BBFC0019A34D /* BeeHiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeHiveTableViewCell.m; sourceTree = "<group>"; };
-		EB58DDFC1F14BBFC0019A34D /* BeeHiveTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeeHiveTableViewCell.xib; sourceTree = "<group>"; };
 		EB60E35F1D79723000DD7E7F /* LHBrowerImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LHBrowerImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB60E3631D79723000DD7E7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB60E3651D79723000DD7E7F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -73,8 +67,6 @@
 		EB60E39B1D79726A00DD7E7F /* LHPhotoList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPhotoList.h; sourceTree = "<group>"; };
 		EB60E39C1D79727000DD7E7F /* LHPhotoList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPhotoList.m; sourceTree = "<group>"; };
 		EB86C5931D7EC47100E57421 /* LHConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LHConst.h; sourceTree = "<group>"; };
-		EBA767731F1365D100E86731 /* BeeHiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeHiveViewController.h; sourceTree = "<group>"; };
-		EBA767741F1365D100E86731 /* BeeHiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeHiveViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,11 +122,6 @@
 				EB60E3661D79723000DD7E7F /* AppDelegate.m */,
 				EB60E3681D79723000DD7E7F /* ViewController.h */,
 				EB60E3691D79723000DD7E7F /* ViewController.m */,
-				EBA767731F1365D100E86731 /* BeeHiveViewController.h */,
-				EBA767741F1365D100E86731 /* BeeHiveViewController.m */,
-				EB58DDFA1F14BBFC0019A34D /* BeeHiveTableViewCell.h */,
-				EB58DDFB1F14BBFC0019A34D /* BeeHiveTableViewCell.m */,
-				EB58DDFC1F14BBFC0019A34D /* BeeHiveTableViewCell.xib */,
 				EB60E36B1D79723000DD7E7F /* Main.storyboard */,
 				EB60E36E1D79723000DD7E7F /* Assets.xcassets */,
 				EB60E3701D79723000DD7E7F /* LaunchScreen.storyboard */,
@@ -292,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB58DDFE1F14BBFC0019A34D /* BeeHiveTableViewCell.xib in Resources */,
 				EB60E3721D79723000DD7E7F /* LaunchScreen.storyboard in Resources */,
 				EB60E36F1D79723000DD7E7F /* Assets.xcassets in Resources */,
 				EB60E36D1D79723000DD7E7F /* Main.storyboard in Resources */,
@@ -321,14 +307,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB4A5E251D7D02BC0005F211 /* LHGroupTableViewCell.m in Sources */,
-				EBA767751F1365D100E86731 /* BeeHiveViewController.m in Sources */,
 				EB60E36A1D79723000DD7E7F /* ViewController.m in Sources */,
 				EB60E3671D79723000DD7E7F /* AppDelegate.m in Sources */,
 				EB60E3971D79725600DD7E7F /* LHCollectionViewController.m in Sources */,
 				EB60E39A1D79726300DD7E7F /* LHGroupViewController.m in Sources */,
 				EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */,
 				EB60E39D1D79727000DD7E7F /* LHPhotoList.m in Sources */,
-				EB58DDFD1F14BBFC0019A34D /* BeeHiveTableViewCell.m in Sources */,
 				EB60E3641D79723000DD7E7F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
