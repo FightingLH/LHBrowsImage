@@ -278,26 +278,27 @@ static LHPhotoList *sharePhotoTool = nil;
 //    }
 //}
 -(NSString *)transFormPhotoTitle:(NSString *)englishName{
-    NSString *photoName;
-    if ([englishName isEqualToString:@"Bursts"]) {
-        photoName = @"连拍快照";
-    }else if([englishName isEqualToString:@"Recently Added"]){
-        photoName = @"最近添加";
-    }else if([englishName isEqualToString:@"Screenshots"]){
-        photoName = @"屏幕快照";
-    }else if([englishName isEqualToString:@"Camera Roll"]){
-        photoName = @"相机胶卷";
-    }else if([englishName isEqualToString:@"Selfies"]){
-        photoName = @"自拍";
-    }else if([englishName isEqualToString:@"QQ"]){
-        photoName = @"QQ";
-    }else if([englishName isEqualToString:@"My Photo Stream"]){
-        photoName = @"我的照片流";
-    }else if([englishName isEqualToString:@"LHBrowerImage"]){
-    photoName = @"测试";
-    }else{
-        photoName = [NSString stringWithFormat:@"%@",englishName];
-    }
-    return photoName;
+    return englishName;
+//    NSString *photoName;
+//    if ([englishName isEqualToString:@"Bursts"]) {
+//        photoName = @"连拍快照";
+//    }else if([englishName isEqualToString:@"Recently Added"]){
+//        photoName = @"最近添加";
+//    }else if([englishName isEqualToString:@"Screenshots"]){
+//        photoName = @"屏幕快照";
+//    }else if([englishName isEqualToString:@"Camera Roll"]){
+//        photoName = @"相机胶卷";
+//    }else if([englishName isEqualToString:@"Selfies"]){
+//        photoName = @"自拍";
+//    }else if([englishName isEqualToString:@"QQ"]){
+//        photoName = @"QQ";
+//    }else if([englishName isEqualToString:@"My Photo Stream"]){
+//        photoName = @"我的照片流";
+//    }else if([englishName isEqualToString:@"LHBrowerImage"]){
+//    photoName = @"测试";
+//    }else{
+//        photoName = [NSString stringWithFormat:@"%@",englishName];
+//    }
+//    return photoName;
 }
 @end
