@@ -8,6 +8,8 @@
 
 #import "LHPhotoList.h"
 #import "LHConst.h"
+#import <UIKit/UIKit.h>
+
 @implementation LHPhotoAblumList
 
 @end
