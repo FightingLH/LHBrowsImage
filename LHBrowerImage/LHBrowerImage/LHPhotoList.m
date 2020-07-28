@@ -176,6 +176,20 @@ static LHPhotoList *sharePhotoTool = nil;
     return arr;
 }
 
+#pragma mark - for all Photo within a specified
+- (NSArray<PHAsset *> *)getVideoAssetsInAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending
+{
+    NSMutableArray<PHAsset *> *arr = [NSMutableArray array];
+    
+    PHFetchResult *result = [self fetchAssetsInAssetCollection:assetCollection ascending:ascending];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (((PHAsset *)obj).mediaType == PHAssetMediaTypeVideo) {
+            [arr addObject:obj];
+        }
+    }];
+    return arr;
+}
+
 #pragma mark - To obtain the asset corresponding pictures
 - (void)requestImageForAsset:(PHAsset *)asset size:(CGSize)size resizeMode:(PHImageRequestOptionsResizeMode)resizeMode completion:(void (^)(UIImage *, NSDictionary *))completion
 {

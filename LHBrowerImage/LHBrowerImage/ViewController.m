@@ -10,7 +10,11 @@
 #import "LHGroupViewController.h"
 #import "LHCollectionViewController.h"
 #import "LHConst.h"
-@interface ViewController()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+#import <AVFoundation/AVFoundation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+
+@interface ViewController()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic,strong) NSMutableArray *imageArray;//存放处理完的图片
 @property (nonatomic,strong) UIScrollView *scrolView;//滚动视图
 @property (nonatomic,strong) NSMutableArray *scrollSubViews;//存放图片子视图
@@ -140,26 +144,60 @@
 
 #pragma mark -获取本地图片
 -(void)acquireLocal{
-    LHGroupViewController *group = [[LHGroupViewController alloc]init];
-    group.maxChooseNumber = 80;
-    __weak ViewController *weakSelf = self;
-    group.backImageArray = ^(NSMutableArray<PHAsset *> *array){
-        __strong ViewController *strongSelf = weakSelf;
-        if (array) {
-            for (int i = 0; i<array.count; i++) {
-                PHAsset *asset = array[i];
-                [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
-                    NSString *length  = [NSString stringWithFormat:@"%f*%f",image.size.width,image.size.height];
-                    [_localLength addObject:length];
-                    [_imageArray addObject:image];
-                    [strongSelf setSpread];
-                }];
-            }
-        }
-    };
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:group] animated:YES completion:nil];
+//    LHGroupViewController *group = [[LHGroupViewController alloc]init];
+//    group.maxChooseNumber = 80;
+//    __weak ViewController *weakSelf = self;
+//    group.backImageArray = ^(NSMutableArray<PHAsset *> *array){
+//        __strong ViewController *strongSelf = weakSelf;
+//        if (array) {
+//            for (int i = 0; i<array.count; i++) {
+//                PHAsset *asset = array[i];
+//                [[LHPhotoList sharePhotoTool]requestImageForAsset:asset size:CGSizeMake(1080, 1920) resizeMode:PHImageRequestOptionsResizeModeFast completion:^(UIImage *image, NSDictionary *info) {
+//                    NSString *length  = [NSString stringWithFormat:@"%f*%f",image.size.width,image.size.height];
+//                    [_localLength addObject:length];
+//                    [_imageArray addObject:image];
+//                    [strongSelf setSpread];
+//                }];
+//            }
+//        }
+//    };
+//    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:group] animated:YES completion:nil];
+    
+    [self configureForSelectVideoFromPhotos];
 }
 
+// 从相册选取视频
+- (void) configureForSelectVideoFromPhotos
+{
+    if (![self isHaveAuthorityToAccessPhotos]) {
+       NSLog(@"没有权限访问您的相册，请在“设置”中启用访问");
+        return;
+    }
+    else if (![self isPhotosAvailable])
+    {
+        NSLog(@"相册不可用");
+        return;
+    }
+//    self.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//    self.mediaTypes = @[(__bridge NSString *)kUTTypeMovie];
+//    self.delegate   = self;
+}
+
+// 相册是否可用
+- (BOOL)isPhotosAvailable
+{
+    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+// 判断是否有权限访问相册
+- (BOOL)isHaveAuthorityToAccessPhotos
+{
+    ALAuthorizationStatus status  = [ALAssetsLibrary authorizationStatus];
+    if (status == ALAuthorizationStatusRestricted || status == ALAuthorizationStatusDenied) {
+        return NO;
+    }
+    return YES;
+}
 #pragma mark -展示UI在界面
 -(void)setSpread{
     

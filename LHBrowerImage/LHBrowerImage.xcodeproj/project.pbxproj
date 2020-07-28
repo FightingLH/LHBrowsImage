@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0638933923D19BBD002B85BD /* LHGroupVedioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0638933823D19BBD002B85BD /* LHGroupVedioViewController.m */; };
 		EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */; };
 		EB4A5E251D7D02BC0005F211 /* LHGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5E241D7D02BC0005F211 /* LHGroupTableViewCell.m */; };
 		EB60E3641D79723000DD7E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB60E3631D79723000DD7E7F /* main.m */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0638933723D19BBD002B85BD /* LHGroupVedioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LHGroupVedioViewController.h; sourceTree = "<group>"; };
+		0638933823D19BBD002B85BD /* LHGroupVedioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LHGroupVedioViewController.m; sourceTree = "<group>"; };
 		EB3DB8371D7FA42400A2E947 /* LHBrowsingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHBrowsingImageView.h; sourceTree = "<group>"; };
 		EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBrowsingImageView.m; sourceTree = "<group>"; };
 		EB4A5E231D7D02BC0005F211 /* LHGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHGroupTableViewCell.h; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 				EB60E39C1D79727000DD7E7F /* LHPhotoList.m */,
 				EB3DB8371D7FA42400A2E947 /* LHBrowsingImageView.h */,
 				EB3DB8381D7FA42400A2E947 /* LHBrowsingImageView.m */,
+				0638933723D19BBD002B85BD /* LHGroupVedioViewController.h */,
+				0638933823D19BBD002B85BD /* LHGroupVedioViewController.m */,
 				EB86C5931D7EC47100E57421 /* LHConst.h */,
 			);
 			name = imageBrower;
@@ -259,6 +264,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -309,6 +315,7 @@
 				EB4A5E251D7D02BC0005F211 /* LHGroupTableViewCell.m in Sources */,
 				EB60E36A1D79723000DD7E7F /* ViewController.m in Sources */,
 				EB60E3671D79723000DD7E7F /* AppDelegate.m in Sources */,
+				0638933923D19BBD002B85BD /* LHGroupVedioViewController.m in Sources */,
 				EB60E3971D79725600DD7E7F /* LHCollectionViewController.m in Sources */,
 				EB60E39A1D79726300DD7E7F /* LHGroupViewController.m in Sources */,
 				EB3DB8391D7FA42400A2E947 /* LHBrowsingImageView.m in Sources */,

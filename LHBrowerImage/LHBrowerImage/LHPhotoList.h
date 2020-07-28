@@ -51,4 +51,9 @@
  * @brief Access to an array of image size for an array of bytes in a byte size
  */
 - (BOOL)judgeAssetisInLocalAblum:(PHAsset *)asset ;
+
+/**
+ * 获取video
+ */
+- (NSArray<PHAsset *> *)getVideoAssetsInAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending;
 @end
